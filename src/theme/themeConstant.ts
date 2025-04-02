@@ -1,0 +1,26 @@
+export const ThemeConstant:any = {
+    FONT_SIZE_PARAGRAPH: 14,
+    FONT_SIZE_PAGETITLE: 18,
+    FONT_SIZE_TITLE: 16,
+
+    FONT_WEIGHT_TITLE: "700",
+
+    BACKGROUND_COLOR: "#01161e",
+    FONT_COLOR: "#D2F3FF",
+    SECONDARY_FONT: "#BDBDBF",
+    PLACEHOLDER_COLOR: "#737480",
+
+    COLOR_BEIGE: "#ffd400",
+    COLOR_BLACK: "#1E2C2D",
+    COLOR_WHITE: "#fff",
+    COLOR_DANGER: "#fc0505",
+    POWDER_WHITE: "#E7DECC",
+
+    PRIMARY_BUTTON: "#0685B8",
+    SECONDARY_BUTTON: "#132D38",
+
+    //global margin horizontal
+    MARGIN_HORIZONTAL: 10,
+
+    cardBg: "#022837"
+}
