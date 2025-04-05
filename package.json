@@ -19,6 +19,8 @@
     "@react-navigation/stack": "^7.2.4",
     "@realm/react": "^0.11.0",
     "@reduxjs/toolkit": "^2.6.1",
+    "@shopify/flash-list": "^1.8.0",
+    "add": "^2.0.6",
     "react": "19.0.0",
     "react-hook-form": "^7.55.0",
     "react-native": "0.78.2",
@@ -34,7 +36,8 @@
     "react-native-vector-icons": "^10.2.0",
     "react-native-webview": "^13.13.5",
     "react-redux": "^9.2.0",
-    "realm": "^12.14.1"
+    "realm": "^12.14.1",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -49,6 +52,7 @@
     "@react-native/typescript-config": "0.78.2",
     "@types/jest": "^29.5.13",
     "@types/react": "^19.0.0",
+    "@types/react-native-crypto-js": "^1.0.3",
     "@types/react-native-vector-icons": "^6.4.18",
     "@types/react-test-renderer": "^19.0.0",
     "eslint": "^8.19.0",

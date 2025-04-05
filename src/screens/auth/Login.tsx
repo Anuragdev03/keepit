@@ -45,7 +45,6 @@ export default function Login(props: any) {
 
     const getSavedPin = async () => {
         const savedPin = await EncryptedStorage.getItem("pin");
-        EncryptedStorage.removeItem("pin")
         if (savedPin) {
             setIsAuthenticated(true);
             // setUserPin(savedPin)
@@ -119,16 +118,20 @@ export default function Login(props: any) {
     async function validatePin() {
         const savedPin = await EncryptedStorage.getItem("pin");
         if (savedPin?.length !== 4) {
-          return
+            return
         }
         if (pin.length !== 4) {
-          return;
+            return;
         }
-        console.log(savedPin, "saved pin", pin.join(""))
 
         if (savedPin === pin.join("")) {
-          dispatch(login({ status: true }))
-        //   navigation.navigate("Main")
+            dispatch(login({ status: true }))
+            Toast.show({
+                type: "success",
+                text1: "Login Success",
+                visibilityTime: 2000,
+            });
+            navigation.navigate("Main")
         }
     }
 
@@ -230,6 +233,7 @@ export default function Login(props: any) {
                         </Animated.View>
                     ))}
                 </View>
+
                 {isAuthenticated === false ?
                     <View style={styles.save_btn}>
                         <CustomButton
@@ -269,7 +273,9 @@ const styles = StyleSheet.create({
         display: "flex",
         flexWrap: "wrap",
         flexDirection: "row",
-        justifyContent: "center"
+        justifyContent: "center",
+        maxWidth: 300,
+        alignSelf: "center"
     },
     key_code: {
         backgroundColor: "#FAFAFA",
