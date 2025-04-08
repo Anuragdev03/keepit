@@ -73,7 +73,7 @@ export default function ViewOTP(props: any) {
                 type: "success",
                 text1: "Record deleted successfully"
             })
-            navigation.navigate("Main", { screen: "OTP Codes" });
+            navigation.navigate("Main", { screen: "Authenticator" });
         } catch (err) {
             console.log(err);
         }

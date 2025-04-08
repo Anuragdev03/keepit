@@ -38,7 +38,7 @@ export default function AddNewAccount(props: any) {
                 text1: "Account added successfully",
                 visibilityTime: 2000,
             });
-            props?.navigation.navigate("Main", { screen: "OTP Codes" })
+            props?.navigation.navigate("Main", { screen: "Authenticator" })
         } catch (err) {
             console.log(err);
             Toast.show({
@@ -73,7 +73,7 @@ export default function AddNewAccount(props: any) {
                         <CustomButton
                             text={"Cancel"}
                             type="SECONDARY"
-                            onPress={() => props?.navigation.navigate("Main", { screen: "OTP Codes" })}
+                            onPress={() => props?.navigation.navigate("Main", { screen: "Authenticator" })}
                         />
                     </View>
                     <View style={{ width: "45%" }}>

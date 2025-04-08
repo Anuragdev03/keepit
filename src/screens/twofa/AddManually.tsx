@@ -52,7 +52,7 @@ export default function AddManually(props: any) {
                 text1: "Account added successfully",
                 visibilityTime: 2000,
             });
-            props?.navigation.navigate("Main", { screen: "OTP Codes" })
+            props?.navigation.navigate("Main", { screen: "Authenticator" })
         } catch (err) {
             console.log(err);
             Toast.show({

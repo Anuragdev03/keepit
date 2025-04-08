@@ -6,12 +6,15 @@ import { DBContext } from "../../modals";
 import Toast from "react-native-toast-message";
 import { getCurrentDateTime } from "../../utils/helpers";
 import RNRestart from 'react-native-restart';
+import MuiIcon from "react-native-vector-icons/MaterialIcons";
+import { useState } from "react";
 
 export default function Settings() {
 
     const { useRealm } = DBContext;
     const realm = useRealm();
-
+    const [showBackupText, setShowBackupText] = useState(false);
+    const [showRestoreText, setShowRestoreText] = useState(false);
 
     const line = (
         <View style={styles.line} />
@@ -23,7 +26,7 @@ export default function Settings() {
             const realmFilePath = realm.path;
 
             // Destination path (backup location)
-            const backupFilePath = RNFS.DownloadDirectoryPath + `/backup_${getCurrentDateTime()}.realm`; 
+            const backupFilePath = RNFS.DownloadDirectoryPath + `/backup_${getCurrentDateTime()}.realm`;
 
             // Copy the realm file to backup location
             await RNFS.copyFile(realmFilePath, backupFilePath);
@@ -57,17 +60,60 @@ export default function Settings() {
             console.log(err)
         }
     }
+
+    function handleBackupText() {
+        setShowBackupText(!showBackupText);
+    }
+
+    function handleRestoreText() {
+        setShowRestoreText(!showRestoreText);
+    }
+
+    const backupDesc = `Your data is being securely backed up to your device storage.You can restore it later if needed. The backup file will be saved in the Download/ folder as backup_<current_date>_<time>.realm. Make sure not to delete it from your storage.`;
+    const restoreDesc = `Restore your previously backed-up data from storage. This will overwrite your current data with the selected backup file.`;
     return (
         <SafeAreaView style={{ height: "100%", backgroundColor: ThemeConstant.BACKGROUND_COLOR }}>
             <View style={styles.container}>
                 <View style={{ marginVertical: 16 }}>
-                    <Pressable onPress={backupRealm}>
+                    <Pressable onPress={handleBackupText} style={styles.row}>
                         <Text style={styles.textStyle}>1. Backup Data</Text>
+                        <MuiIcon
+                            name={showBackupText ? "keyboard-arrow-down" : "keyboard-arrow-right"}
+                            size={24}
+                            color={ThemeConstant.COLOR_BEIGE}
+                        />
                     </Pressable>
+                    {showBackupText ?
+                        <View>
+                            <Text style={styles.desc}>
+                                {backupDesc}
+                            </Text>
+                            <Pressable onPress={backupRealm} style={styles.btn}>
+                                <Text style={styles.btnText}>
+                                    Click to Backup
+                                </Text>
+                            </Pressable>
+                        </View> : null
+                    }
                     {line}
-                    <Pressable onPress={restoreRealm}>
+                    <Pressable onPress={handleRestoreText} style={styles.row}>
                         <Text style={styles.textStyle}>2. Restore Data</Text>
+                        <MuiIcon
+                            name={showRestoreText ? "keyboard-arrow-down" : "keyboard-arrow-right"}
+                            size={24}
+                            color={ThemeConstant.COLOR_BEIGE}
+                        />
                     </Pressable>
+                    {showRestoreText ?
+                        <View>
+                            <Text style={styles.desc}>
+                                {restoreDesc}
+                            </Text>
+                            <Pressable onPress={restoreRealm} style={styles.btn}>
+                                <Text style={styles.btnText}>Click to Restore</Text>
+                            </Pressable>
+                        </View> : null
+                    }
                 </View>
             </View>
         </SafeAreaView>
@@ -87,5 +133,28 @@ const styles = StyleSheet.create({
     textStyle: {
         color: ThemeConstant.FONT_COLOR,
         marginVertical: 10
+    },
+    row: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    desc: {
+        color: ThemeConstant.PLACEHOLDER_COLOR,
+        textAlign: "left",
+        fontSize: 16
+    },
+    btn: {
+        width: 130,
+
+        padding: 8,
+        marginVertical: 16,
+
+        borderRadius: 5,
+        backgroundColor: ThemeConstant.PRIMARY_BUTTON
+    },
+    btnText: {
+        color: ThemeConstant.FONT_COLOR, fontWeight: 600, textAlign: "center"
     }
 })
