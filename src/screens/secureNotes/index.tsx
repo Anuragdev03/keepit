@@ -23,7 +23,7 @@ export default function SecureNotes(props: any) {
     const [loading, setLoading] = useState(true);
     const [notesList, setNotesList] = useState<any>([])
     const navigation = props.navigation;
-    const [refreshing, setRefreshing] = useState(false);
+    const [refreshing] = useState(false);
 
     const { useRealm } = DBContext;
     const realm = useRealm()
@@ -35,7 +35,14 @@ export default function SecureNotes(props: any) {
     );
 
     function getList() {
-        setLoading(false)
+        try {
+            const data = realm.objects("SecureNotes");
+            setNotesList(data);
+        } catch(err) {
+            console.log(err)
+        } finally {
+            setLoading(false)
+        }
     }
 
     function getSearchTerm(value: string) {
@@ -45,7 +52,7 @@ export default function SecureNotes(props: any) {
     function handleSearch(searchTerm?: string) {
         try {
             const filteredData = realm
-                .objects("PasswordRecord")
+                .objects("SecureNotes")
                 .filtered(
                     'title CONTAINS[c] $0 OR content CONTAINS[c] $0',
                     searchTerm
@@ -79,6 +86,7 @@ export default function SecureNotes(props: any) {
                             <List data={item} index={index} navigation={navigation} />
                         )}
                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={getList} />}
+                        estimatedItemSize={100}
                     />
                     {/* Add button */}
                     <Pressable

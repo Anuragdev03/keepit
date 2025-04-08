@@ -124,7 +124,7 @@ export default function EditPassword(props: any) {
                             style={{ position: "absolute", right: 0 }}
                             onPress={() => copyToClipboard(getValues("userName"))}
                         >
-                            <MuiIcon name="content-copy" size={24} color="white" />
+                            <MuiIcon name="content-copy" size={24} color={ThemeConstant.PLACEHOLDER_COLOR} />
                         </Pressable>
                     </View>
 
@@ -148,13 +148,13 @@ export default function EditPassword(props: any) {
                             style={{ position: "absolute", right: 0 }}
                             onPress={() => copyToClipboard(getValues("password"))}
                         >
-                            <MuiIcon name="content-copy" size={24} color="white" />
+                            <MuiIcon name="content-copy" size={24} color={ThemeConstant.PLACEHOLDER_COLOR} />
                         </Pressable>
                         <Pressable
                             style={{ position: "absolute", right: 30 }}
                             onPress={() => setShowPassword(!showPassword)}
                         >
-                            <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="white" />
+                            <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color={ThemeConstant.PLACEHOLDER_COLOR} />
                         </Pressable>
                     </View>
 

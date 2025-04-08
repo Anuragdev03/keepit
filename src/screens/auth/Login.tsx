@@ -160,7 +160,7 @@ export default function Login(props: any) {
 
     const showRecoveryCodeModal = (
         <Modal
-            animationType="slide"
+            animationType="fade"
             transparent={true}
             visible={modalVisible}
             onRequestClose={closeModal}

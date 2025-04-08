@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { View, Text, Pressable, StyleSheet, Animated, RefreshControl } from "react-native";
+import { View, Text, Pressable, StyleSheet, Animated, RefreshControl, SafeAreaView } from "react-native";
 
 // icons
 import MuiIcon from "react-native-vector-icons/MaterialIcons";
@@ -88,7 +88,7 @@ export default function Password(props: any) {
 
 
     return (
-        <View style={{ height: "100%", backgroundColor: ThemeConstant.BACKGROUND_COLOR }}>
+        <SafeAreaView style={{ height: "100%", backgroundColor: ThemeConstant.BACKGROUND_COLOR }}>
             {loading ? <Spinner /> :
                 <>
                     <SearchField handleChange={getSearchTerm} showSearchButton={false} placeholder="Search Credentials"  />
@@ -115,7 +115,7 @@ export default function Password(props: any) {
                     </Animated.View>
                 </>
             }
-        </View>
+        </SafeAreaView>
     )
 }
 
