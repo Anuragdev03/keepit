@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Linking } from "react-native";
 import { ThemeConstant } from "../../theme/themeConstant";
 import RNFS from 'react-native-fs';
 import { pick } from '@react-native-documents/picker';
@@ -9,7 +9,7 @@ import RNRestart from 'react-native-restart';
 import MuiIcon from "react-native-vector-icons/MaterialIcons";
 import { useState } from "react";
 
-export default function Settings() {
+export default function Settings(props: any) {
 
     const { useRealm } = DBContext;
     const realm = useRealm();
@@ -19,6 +19,10 @@ export default function Settings() {
     const line = (
         <View style={styles.line} />
     )
+
+    const privacyPolicy = () => {
+        Linking.openURL("https://keepit-auth.my.canva.site")
+    }
 
     async function backupRealm() {
         try {
@@ -69,12 +73,17 @@ export default function Settings() {
         setShowRestoreText(!showRestoreText);
     }
 
+    function gotoAboutScreen() {
+        props.navigation.navigate("About");
+    }
+
     const backupDesc = `Your data is being securely backed up to your device storage.You can restore it later if needed. The backup file will be saved in the Download/ folder as backup_<current_date>_<time>.realm. Make sure not to delete it from your storage.`;
     const restoreDesc = `Restore your previously backed-up data from storage. This will overwrite your current data with the selected backup file.`;
     return (
         <SafeAreaView style={{ height: "100%", backgroundColor: ThemeConstant.BACKGROUND_COLOR }}>
             <View style={styles.container}>
                 <View style={{ marginVertical: 16 }}>
+                    {/* Backup */}
                     <Pressable onPress={handleBackupText} style={styles.row}>
                         <Text style={styles.textStyle}>1. Backup Data</Text>
                         <MuiIcon
@@ -96,6 +105,7 @@ export default function Settings() {
                         </View> : null
                     }
                     {line}
+                    {/* Restore */}
                     <Pressable onPress={handleRestoreText} style={styles.row}>
                         <Text style={styles.textStyle}>2. Restore Data</Text>
                         <MuiIcon
@@ -114,6 +124,28 @@ export default function Settings() {
                             </Pressable>
                         </View> : null
                     }
+                    {line}
+                    {/* About */}
+                    <Pressable onPress={gotoAboutScreen} style={styles.row}>
+                        <Text style={styles.textStyle}>3. About</Text>
+                        <MuiIcon
+                            name={"keyboard-arrow-right"}
+                            size={24}
+                            color={ThemeConstant.COLOR_BEIGE}
+                        />
+                    </Pressable>
+                    {line}
+
+                    {/* Privacy policy */}
+
+                    <Pressable onPress={privacyPolicy} style={styles.row}>
+                        <Text style={styles.textStyle}>4. Privacy Policy</Text>
+                        <MuiIcon
+                            name={"link"}
+                            size={24}
+                            color={ThemeConstant.COLOR_BEIGE}
+                        />
+                    </Pressable>
                 </View>
             </View>
         </SafeAreaView>

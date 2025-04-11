@@ -228,7 +228,7 @@ export default function Login(props: any) {
                                     handlePinCode(val)
                                 }}
                             >
-                                <Text>{val}</Text>
+                                <Text style={styles.bold}>{val}</Text>
                             </Pressable>
                         </Animated.View>
                     ))}
@@ -349,5 +349,8 @@ const styles = StyleSheet.create({
     },
     modal_text: {
         marginBottom: 20
+    },
+    bold: {
+        fontWeight: "bold"
     }
 });

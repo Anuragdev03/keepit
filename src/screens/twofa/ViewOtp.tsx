@@ -1,5 +1,5 @@
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { totp } from 'otplib';
+import { authenticator } from 'otplib';
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { ThemeConstant } from "../../theme/themeConstant";
@@ -36,7 +36,7 @@ export default function ViewOTP(props: any) {
         const timeLeft = step - (now % step);
         setRemaining(timeLeft);
 
-        if (timeLeft === 1) {
+        if (timeLeft === 1 || timeLeft >= 28) {
             updateOtp()
         }
     }
@@ -53,8 +53,8 @@ export default function ViewOTP(props: any) {
         }
 
 
-        totp.options = { digits: parsedData?.digits, step: parsedData?.period }
-        const token = totp.generate(secret);
+        authenticator.options = { digits: parsedData?.digits, step: parsedData?.period }
+        const token = authenticator.generate(secret);
         setOtp(token);
     };
 

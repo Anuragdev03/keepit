@@ -1,4 +1,4 @@
-package com.keepit
+package com.anurag.keepit
 
 import android.content.ClipData
 import android.content.ClipboardManager

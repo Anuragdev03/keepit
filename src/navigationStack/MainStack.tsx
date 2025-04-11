@@ -36,6 +36,8 @@ import ViewOTP from "../screens/twofa/ViewOtp";
 
 // Settings
 import Settings from "../screens/settings";
+import SplashScreen from "../splashScreen";
+import About from "../screens/about";
 
 //Navigators
 const Tab = createBottomTabNavigator();
@@ -57,6 +59,8 @@ const scanQrName = "ScanQR";
 const addNewAccount = "AddNewAccount";
 const viewOtpScreen = "ViewOtpScreen";
 const settingsName = "Settings";
+const splashScreen = "SplashScreen";
+const about = "About";
 
 const AppNavigator = () => {
     return (
@@ -76,8 +80,8 @@ const AppNavigator = () => {
                     } else if (routeName === twofaName) {
                         iconName = focused ? "document-lock" : "document-lock-outline"
                     } else if (routeName === settingsName) {
-                      iconName = focused ? "settings" : "settings-outline";
-                    } 
+                        iconName = focused ? "settings" : "settings-outline";
+                    }
 
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
@@ -119,7 +123,7 @@ export default function MainStack() {
         <SafeAreaProvider>
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName={loginScreenName}
+                    initialRouteName={splashScreen}
                     screenOptions={{
                         gestureDirection: "horizontal",
                         gestureEnabled: true,
@@ -141,6 +145,11 @@ export default function MainStack() {
                             <Stack.Screen
                                 name={mainScreen}
                                 component={AppNavigator}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name={splashScreen}
+                                component={SplashScreen}
                                 options={{ headerShown: false }}
                             />
                         </>
@@ -329,6 +338,29 @@ export default function MainStack() {
                                     ),
                                 }}
                             />
+
+                            <Stack.Screen
+                                name={about}
+                                component={About}
+                                options={{
+                                    header: ({ navigation }) => (
+                                        <View style={styles.header}>
+                                            <View
+                                                style={{ flexDirection: "row", alignItems: "center" }}
+                                            >
+                                                <MuiIcon
+                                                    name="arrow-back"
+                                                    size={24}
+                                                    color={ThemeConstant.FONT_COLOR}
+                                                    style={{ paddingHorizontal: 5 }}
+                                                    onPress={() => navigation.goBack()}
+                                                />
+                                                <Text style={styles.headerText}>About</Text>
+                                            </View>
+                                        </View>
+                                    ),
+                                }}
+                            />
                         </>}
                 </Stack.Navigator>
             </NavigationContainer>
@@ -343,7 +375,6 @@ export default function MainStack() {
 
 const styles = StyleSheet.create({
     header: {
-        marginTop: ReactNativeStatusBar.currentHeight, 
         backgroundColor: ThemeConstant.BACKGROUND_COLOR,
         paddingVertical: 20,
     },

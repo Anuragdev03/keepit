@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from "react-native-vision-camera"
 import queryString from 'query-string';
 import { useIsFocused } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 interface OtpAuthData {
     type: 'totp' | 'hotp';
@@ -37,7 +38,14 @@ export default function ScanQR(props: any) {
                 const { value } = codes[0];
                 if(value) {
                     const data = parseOtpAuthUrl(value);
-                    navigation.navigate("AddNewAccount", data);
+                    if(data) {
+                        navigation.navigate("AddNewAccount", data);
+                    } else {
+                        Toast.show({
+                            type: "info",
+                            text1: "Invalid QR code"
+                        })
+                    }
                 }
 
             } catch (err) {

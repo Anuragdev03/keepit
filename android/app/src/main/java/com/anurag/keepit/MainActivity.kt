@@ -1,4 +1,4 @@
-package com.keepit
+package com.anurag.keepit
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
