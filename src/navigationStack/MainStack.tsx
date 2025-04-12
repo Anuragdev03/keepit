@@ -90,6 +90,7 @@ const AppNavigator = () => {
                     backgroundColor: ThemeConstant.BACKGROUND_COLOR,
                     paddingBottom: 5,
                     paddingTop: 5,
+                    height: 60
                 },
                 // header: ({ navigation, route, options }) => {
                 //     let title = route.name;

@@ -38,7 +38,7 @@ export default function SecureNotes(props: any) {
         try {
             const data = realm.objects("SecureNotes");
             setNotesList(data);
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         } finally {
             setLoading(false)
@@ -79,6 +79,7 @@ export default function SecureNotes(props: any) {
             ) : (
                 <>
                     <SearchField handleChange={getSearchTerm} showSearchButton={false} placeholder="Search Notes" />
+                    {notesList?.length ? <Text style={styles.totalCount}>Total records: {notesList?.length}</Text> : ""}
                     <FlashList
                         data={notesList}
                         keyExtractor={(item, index) => `${item.title}_${index}`}
@@ -128,4 +129,9 @@ const styles = StyleSheet.create({
 
         margin: ThemeConstant.MARGIN_HORIZONTAL,
     },
+    totalCount: {
+        marginHorizontal: ThemeConstant.MARGIN_HORIZONTAL,
+        color: ThemeConstant.PLACEHOLDER_COLOR,
+        marginBottom: 8
+    }
 });

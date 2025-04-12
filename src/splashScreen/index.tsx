@@ -14,10 +14,11 @@ export default function SplashScreen(props: any) {
         <SafeAreaView style={{ height: "100%", backgroundColor: ThemeConstant.BACKGROUND_COLOR }}>
             <View style={styles.wrapper}>
                 <Image
-                    source={require("../assets/logo.png")}
-                    style={{ width: 200, height: 200, alignSelf: "center" }}
+                    source={require("../assets/app_logo.png")}
+                    style={{ width: 150, height: 150, alignSelf: "center" }}
                 />
-                <Text style={styles.textStyle}>Open Source Password Manager and Authenticator</Text>
+                <Text style={styles.logoText}>KEEP IT</Text>
+                <Text style={styles.textStyle}>Your Privacy, Your Control</Text>
             </View>
         </SafeAreaView>
     )
@@ -29,8 +30,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    logoText: {
+        color: ThemeConstant.COLOR_BEIGE,
+        fontSize: 22,
+        textAlign: "center",
+        lineHeight: 30,
+        fontWeight: "600",
+        letterSpacing: 2,
+        marginBottom: 24
+    },
     textStyle: {
-        color: ThemeConstant.SECONDARY_FONT,
+        color: ThemeConstant.PLACEHOLDER_COLOR,
         fontSize: 18,
         textAlign: "center",
         lineHeight: 30,

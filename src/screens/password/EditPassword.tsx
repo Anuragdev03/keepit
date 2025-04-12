@@ -184,7 +184,7 @@ export default function EditPassword(props: any) {
                             <CustomButton
                                 onPress={handleDeleteModalChange}
                                 text="Delete"
-                                type="SECONDARY"
+                                type="TERTIARY"
                             />
                         </View>
                         <View style={{ width: "45%" }}>

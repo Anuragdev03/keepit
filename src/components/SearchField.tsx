@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         maxWidth: deviceWidth,
         marginHorizontal: 10,
-        marginBottom: 40
+        marginBottom: 24
     },
     input: {
         borderWidth: 1,

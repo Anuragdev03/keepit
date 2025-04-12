@@ -92,6 +92,7 @@ export default function Password(props: any) {
             {loading ? <Spinner /> :
                 <>
                     <SearchField handleChange={getSearchTerm} showSearchButton={false} placeholder="Search Credentials"  />
+                    {credentials?.length ? <Text style={styles.totalCount}>Total records: {credentials?.length}</Text> : ""}
                     <FlashList
                         data={credentials}
                         renderItem={({ item, index }: { item: any, index: number }) => (
@@ -140,4 +141,9 @@ const styles = StyleSheet.create({
 
         margin: ThemeConstant.MARGIN_HORIZONTAL,
     },
+    totalCount: {
+        marginHorizontal: ThemeConstant.MARGIN_HORIZONTAL,
+        color: ThemeConstant.PLACEHOLDER_COLOR,
+        marginBottom: 8
+    }
 });

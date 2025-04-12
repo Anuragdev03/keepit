@@ -30,7 +30,7 @@ export default function About() {
                             style={styles.logo}
                             source={require("./logo.png")}
                         />
-                        <Text style={{ color: ThemeConstant.SECONDARY_FONT }}>Version: 1.0.0</Text>
+                        <Text style={{ color: ThemeConstant.SECONDARY_FONT }}>Version: 1.0.2</Text>
                     </View>
                     {line}
 

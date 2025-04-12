@@ -124,6 +124,7 @@ export default function twofa(props: any) {
             ) : (
                 <>
                     <SearchField handleChange={getSearchTerm} showSearchButton={false} placeholder="Search" />
+                    {notesList?.length ? <Text style={styles.totalCount}>Total records: {notesList?.length}</Text> : ""}
                     <FlashList
                         data={notesList}
                         keyExtractor={(item, index) => `${item.title}_${index}`}
@@ -140,7 +141,7 @@ export default function twofa(props: any) {
                                 {scanButton}
                                 {addManuallyBtn}
                             </View>
-                        ): null}
+                        ) : null}
                         <Pressable
                             style={({ pressed }) => [styles.add_button]}
                             onPress={showOptionsHandler}
@@ -215,5 +216,10 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+    },
+    totalCount: {
+        marginHorizontal: ThemeConstant.MARGIN_HORIZONTAL,
+        color: ThemeConstant.PLACEHOLDER_COLOR,
+        marginBottom: 8
     }
 });
