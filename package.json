@@ -1,6 +1,6 @@
 {
   "name": "keepit",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -20,7 +20,6 @@
     "@react-navigation/stack": "^7.2.4",
     "@realm/react": "^0.11.0",
     "@reduxjs/toolkit": "^2.6.1",
-    "@shopify/flash-list": "^1.8.0",
     "buffer": "^6.0.3",
     "otplib": "^12.0.1",
     "query-string": "^9.1.1",

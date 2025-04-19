@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { View, Text, Pressable, StyleSheet, Animated, RefreshControl, SafeAreaView } from "react-native";
+import { View, Text, Pressable, StyleSheet, Animated, RefreshControl, SafeAreaView, FlatList } from "react-native";
 
 // icons
 import MuiIcon from "react-native-vector-icons/MaterialIcons";
@@ -10,8 +10,6 @@ import SearchField from "../../components/SearchField";
 import { DBContext } from "../../modals";
 import PasswordList from "./PasswordList";
 import { useFocusEffect } from "@react-navigation/native";
-
-import { FlashList } from "@shopify/flash-list";
 
 export default function Password(props: any) {
     const navigation = props.navigation;
@@ -53,7 +51,7 @@ export default function Password(props: any) {
             const filteredData = realm
                 .objects("PasswordRecord")
                 .filtered(
-                    'website CONTAINS[c] $0 OR user_name CONTAINS[c] $0',
+                    'website CONTAINS[c] $0 OR user_name CONTAINS[c] $0 OR category CONTAINS[c] $0',
                     searchTerm
                 );
 
@@ -88,19 +86,21 @@ export default function Password(props: any) {
 
 
     return (
-        <SafeAreaView style={{ height: "100%", backgroundColor: ThemeConstant.BACKGROUND_COLOR }}>
+        <SafeAreaView style={{ height: "100%", backgroundColor: ThemeConstant.BACKGROUND_COLOR, flex: 1 }}>
             {loading ? <Spinner /> :
                 <>
-                    <SearchField handleChange={getSearchTerm} showSearchButton={false} placeholder="Search Credentials"  />
+                    <SearchField handleChange={getSearchTerm} showSearchButton={false} placeholder="Search by Name/website/category" />
                     {credentials?.length ? <Text style={styles.totalCount}>Total records: {credentials?.length}</Text> : ""}
-                    <FlashList
+                    <FlatList
                         data={credentials}
                         renderItem={({ item, index }: { item: any, index: number }) => (
                             <PasswordList data={item} index={index} navigation={navigation} />
                         )}
                         keyExtractor={(item, index) => `${item.user_name}_${index}`}
                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={getCredentials} />}
-                        estimatedItemSize={100}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={10}
+                        windowSize={5}
                     />
                     {/* Add button */}
                     <Animated.View style={{ transform: [{ scale: scaleAnimations }] }}>

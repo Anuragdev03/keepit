@@ -14,6 +14,7 @@ import { ThemeConstant } from "../../theme/themeConstant";
 import { SALT } from "../../utils/constant";
 import CryptoJS from "react-native-crypto-js";
 import { DBContext } from "../../modals";
+import EncryptedStorage from "react-native-encrypted-storage";
 
 export default function AddSecureNotes(props: any) {
     const [titleText, setTitleText] = useState("");
@@ -23,7 +24,7 @@ export default function AddSecureNotes(props: any) {
     const { useRealm } = DBContext;
     const realm = useRealm()
 
-    function saveSecureNote() {
+    async function saveSecureNote() {
         if (!titleText) {
             Toast.show({
                 type: "error",
@@ -42,7 +43,9 @@ export default function AddSecureNotes(props: any) {
             return;
         }
         try {
-            const encryptedContent = CryptoJS.AES.encrypt(content, SALT).toString();
+            const saltKey = await EncryptedStorage.getItem("encryption_key") ?? SALT;
+
+            const encryptedContent = CryptoJS.AES.encrypt(content, saltKey).toString();
             realm.write(() => {
                 realm.create("SecureNotes", {
                     title: titleText,

@@ -22,7 +22,7 @@ export default function SearchField({ value, handleChange, handleSearch, showSea
                 style={[styles.input, {width: showSearchButton ? "80%" : "100%"}]}
                 onSubmitEditing={handleSearch}
                 placeholder={placeholder}
-                placeholderTextColor={ThemeConstant.FONT_COLOR}
+                placeholderTextColor={ThemeConstant.PLACEHOLDER_COLOR}
             />
             {showSearchButton ? <Pressable onPress={handleSearch} style={styles.button}>
                 <Text style={{ color: ThemeConstant.FONT_COLOR }}>Search</Text>

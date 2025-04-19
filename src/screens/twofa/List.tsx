@@ -24,7 +24,6 @@ const List: React.FC<ListProps> = ({ data, index, navigation }) => {
     <Pressable
       onPress={() => navigation.navigate("ViewOtpScreen", { data: JSON.stringify(data) })}
       style={styles.container}
-      key={data?.uid + index}
     >
       <View style={styles.content}>
         <View
@@ -62,6 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: ThemeConstant.cardBg,
     borderRadius: 10,
     marginVertical: 4,
+    height: 72
   },
   content: {
     flexDirection: "row",

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions, Pressable } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useForm } from "react-hook-form";
 import Toast from "react-native-toast-message";
@@ -7,12 +7,11 @@ import Toast from "react-native-toast-message";
 // Redux
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import TextArea from "../../components/TextArea";
-import CryptoJS from "react-native-crypto-js";
 import { ThemeConstant } from "../../theme/themeConstant";
-import { SALT } from "../../utils/constant";
 import { DBContext } from "../../modals";
-import { randomStringGenerator } from "../../utils/randomStringGenerator";
+import EncryptedStorage from "react-native-encrypted-storage";
+import { SALT } from "../../utils/constant";
+import CryptoJS from "react-native-crypto-js";
 
 export default function AddManually(props: any) {
 
@@ -25,7 +24,7 @@ export default function AddManually(props: any) {
     const navigation = props.navigation;
 
     // Handle submit
-    function handleFormSubmit(data: any) {
+    async function handleFormSubmit(data: any) {
         try {
             if (!data?.secret) {
                 Toast.show({
@@ -35,10 +34,13 @@ export default function AddManually(props: any) {
                 });
                 return
             }
+            const saltKey = await EncryptedStorage.getItem("encryption_key") ?? SALT;
+            const encryptedSecret = CryptoJS.AES.encrypt(data?.secret, saltKey).toString();
+
 
             realm.write(() => {
                 realm.create("Authenticator", {
-                    secret: data?.secret,
+                    secret: encryptedSecret,
                     type: "totp",
                     issuer: data?.issuer,
                     account: data?.account,

@@ -5,6 +5,7 @@ import {
     StyleSheet,
     RefreshControl,
     Pressable,
+    FlatList
 } from "react-native";
 import Spinner from "../../components/Spinner";
 import { useCallback, useState } from "react";
@@ -16,10 +17,9 @@ import MuiIcon from "react-native-vector-icons/MaterialIcons";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { DBContext } from "../../modals";
-import { FlashList } from "@shopify/flash-list";
 import List from "./List";
 
-export default function twofa(props: any) {
+export default function Twofa(props: any) {
     const [loading, setLoading] = useState(true);
     const [notesList, setNotesList] = useState<any>([])
     const navigation = props.navigation;
@@ -125,15 +125,18 @@ export default function twofa(props: any) {
                 <>
                     <SearchField handleChange={getSearchTerm} showSearchButton={false} placeholder="Search" />
                     {notesList?.length ? <Text style={styles.totalCount}>Total records: {notesList?.length}</Text> : ""}
-                    <FlashList
+                    <FlatList
                         data={notesList}
-                        keyExtractor={(item, index) => `${item.title}_${index}`}
+                        keyExtractor={(item, index) => `${item.issuer}_${index}`}
                         renderItem={({ item, index }: { item: any, index: number }) => (
                             <List data={item} index={index} navigation={navigation} />
                         )}
                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={getList} />}
-                        estimatedItemSize={100}
+                        initialNumToRender={10}
+                        maxToRenderPerBatch={10}
+                        windowSize={5}
                     />
+                    
                     {/* Add button */}
                     <View>
                         {showOptions ? (

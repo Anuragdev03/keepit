@@ -21,6 +21,10 @@ export default function About() {
         Linking.openURL("https://buymeacoffee.com/anuragdev03")
     }
 
+    const openWebsite = () => {
+        Linking.openURL("https://keepit123.netlify.app")
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.wrapper}>
@@ -30,7 +34,7 @@ export default function About() {
                             style={styles.logo}
                             source={require("./logo.png")}
                         />
-                        <Text style={{ color: ThemeConstant.SECONDARY_FONT }}>Version: 1.0.2</Text>
+                        <Text style={{ color: ThemeConstant.SECONDARY_FONT }}>Version: 1.0.4</Text>
                     </View>
                     {line}
 
@@ -78,6 +82,13 @@ export default function About() {
                         <Text style={styles.title}>We are OpenSource</Text>
                         <Pressable onPress={openGitHub}>
                             <Text style={styles.para}>Github Link</Text>
+                        </Pressable>
+                    </View>
+
+                    <View>
+                        <Text style={styles.title}>Website Link</Text>
+                        <Pressable onPress={openWebsite}>
+                            <Text style={styles.para}>Open website</Text>
                         </Pressable>
                     </View>
                 </ScrollView>

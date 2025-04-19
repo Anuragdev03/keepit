@@ -15,11 +15,11 @@ import { SALT } from "../../utils/constant";
 import CryptoJS from "react-native-crypto-js";
 import DeleteModal from "../../components/DeleteModal";
 import { DBContext } from "../../modals";
+import EncryptedStorage from "react-native-encrypted-storage";
 
 export default function EditSecureNotes(props: any) {
     const [titleText, setTitleText] = useState("");
     const [content, setContent] = useState("");
-    const navigation = props.navigation;
     const [deleteModal, setDeleteModal] = useState(false);
 
     const paramsData = props?.route?.params?.data;
@@ -32,11 +32,13 @@ export default function EditSecureNotes(props: any) {
         updateFields();
     }, [])
 
-    function updateFields() {
+    async function updateFields() {
         try {
             if (notesData) {
                 setTitleText(notesData?.title);
-                let bytes = CryptoJS.AES.decrypt(notesData?.content, SALT);
+                const saltKey = await EncryptedStorage.getItem("encryption_key") ?? SALT;
+                
+                let bytes = CryptoJS.AES.decrypt(notesData?.content, saltKey);
                 const decryptedValue = bytes.toString(CryptoJS.enc.Utf8);
                 setContent(decryptedValue);
             }
@@ -45,9 +47,10 @@ export default function EditSecureNotes(props: any) {
         }
     }
 
-    function updateNotes() {
+    async function updateNotes() {
         try {
-            const encryptedContent = CryptoJS.AES.encrypt(content, SALT).toString();
+            const saltKey = await EncryptedStorage.getItem("encryption_key") ?? SALT;
+            const encryptedContent = CryptoJS.AES.encrypt(content, saltKey).toString();
             const id = new Realm.BSON.ObjectId(notesData?._id);
 
             realm.write(() => {

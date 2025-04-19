@@ -3,14 +3,16 @@ import { ThemeConstant } from "../../theme/themeConstant";
 import CustomButton from "../../components/CustomButton";
 import Toast from "react-native-toast-message";
 import { DBContext } from "../../modals";
-
+import EncryptedStorage from "react-native-encrypted-storage";
+import CryptoJS from "react-native-crypto-js";
+import { SALT } from "../../utils/constant";
 
 export default function AddNewAccount(props: any) {
     const data = props?.route?.params;
     const { useRealm } = DBContext;
     const realm = useRealm()
 
-    function addData() {
+    async function addData() {
         try {
             if (!data?.secret) {
                 Toast.show({
@@ -20,10 +22,12 @@ export default function AddNewAccount(props: any) {
                 });
                 return
             }
+            const saltKey = await EncryptedStorage.getItem("encryption_key") ?? SALT;
+            const encryptedSecret = CryptoJS.AES.encrypt(data?.secret, saltKey).toString();
 
             realm.write(() => {
                 realm.create("Authenticator", {
-                    secret: data?.secret,
+                    secret: encryptedSecret,
                     type: data?.type,
                     issuer: data?.issuer,
                     account: data?.account,

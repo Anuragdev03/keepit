@@ -28,7 +28,7 @@ import AddSecureNotes from "../screens/secureNotes/AddSecureNotes";
 import EditSecureNotes from "../screens/secureNotes/EditSecureNotes";
 
 // Two fa
-import twofa from "../screens/twofa";
+import Twofa from "../screens/twofa";
 import AddManually from "../screens/twofa/AddManually";
 import ScanQR from "../screens/twofa/Scan";
 import AddNewAccount from "../screens/twofa/AddNewAccount";
@@ -38,6 +38,9 @@ import ViewOTP from "../screens/twofa/ViewOtp";
 import Settings from "../screens/settings";
 import SplashScreen from "../splashScreen";
 import About from "../screens/about";
+
+// Encryption key screen
+import EncryptionKey from "../screens/encryption";
 
 //Navigators
 const Tab = createBottomTabNavigator();
@@ -61,6 +64,7 @@ const viewOtpScreen = "ViewOtpScreen";
 const settingsName = "Settings";
 const splashScreen = "SplashScreen";
 const about = "About";
+const encryptionKey = "EncryptionKey"
 
 const AppNavigator = () => {
     return (
@@ -108,7 +112,7 @@ const AppNavigator = () => {
 
 
             {/* Two FA */}
-            <Tab.Screen name={twofaName} component={twofa} />
+            <Tab.Screen name={twofaName} component={Twofa} />
 
             {/* Setting */}
             <Tab.Screen name={settingsName} component={Settings} />
@@ -357,6 +361,29 @@ export default function MainStack() {
                                                     onPress={() => navigation.goBack()}
                                                 />
                                                 <Text style={styles.headerText}>About</Text>
+                                            </View>
+                                        </View>
+                                    ),
+                                }}
+                            />
+
+                            <Stack.Screen
+                                name={encryptionKey}
+                                component={EncryptionKey}
+                                options={{
+                                    header: ({ navigation }) => (
+                                        <View style={styles.header}>
+                                            <View
+                                                style={{ flexDirection: "row", alignItems: "center" }}
+                                            >
+                                                <MuiIcon
+                                                    name="arrow-back"
+                                                    size={24}
+                                                    color={ThemeConstant.FONT_COLOR}
+                                                    style={{ paddingHorizontal: 5 }}
+                                                    onPress={() => navigation.goBack()}
+                                                />
+                                                <Text style={styles.headerText}>Encryption Key</Text>
                                             </View>
                                         </View>
                                     ),

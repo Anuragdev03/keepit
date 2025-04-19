@@ -8,6 +8,9 @@ import DeleteModal from "../../components/DeleteModal";
 import { DBContext } from "../../modals";
 import { copyToClipboard } from "../../utils/helpers";
 import MuiIcon from "react-native-vector-icons/MaterialIcons";
+import EncryptedStorage from "react-native-encrypted-storage";
+import { SALT } from "../../utils/constant";
+import CryptoJS from "react-native-crypto-js";
 
 export default function ViewOTP(props: any) {
     const navigation = props.navigation;
@@ -41,7 +44,7 @@ export default function ViewOTP(props: any) {
         }
     }
 
-    const updateOtp = () => {
+    const updateOtp = async () => {
         const secret = parsedData?.secret;
         if (!secret) {
             Toast.show({
@@ -51,10 +54,12 @@ export default function ViewOTP(props: any) {
             });
             return;
         }
-
+        const saltKey = await EncryptedStorage.getItem("encryption_key") ?? SALT;
+        let bytes = CryptoJS.AES.decrypt(secret, saltKey);
+        const decryptedSecret = bytes.toString(CryptoJS.enc.Utf8);
 
         authenticator.options = { digits: parsedData?.digits, step: parsedData?.period }
-        const token = authenticator.generate(secret);
+        const token = authenticator.generate(decryptedSecret);
         setOtp(token);
     };
 

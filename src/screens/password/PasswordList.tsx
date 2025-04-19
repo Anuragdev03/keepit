@@ -23,7 +23,6 @@ export default function PasswordList({ data, index, navigation }: PasswordListPr
       <Pressable 
         onPress={() => navigation.navigate("EditCredentials", {data: JSON.stringify(data)})} 
         style={styles.container} 
-        key={data.id}
       >
         <View style={styles.content}>
           <View style={styles.row}>
@@ -53,9 +52,10 @@ export default function PasswordList({ data, index, navigation }: PasswordListPr
       backgroundColor: ThemeConstant.cardBg,
       borderRadius: 10,
       marginVertical: 4,
+      height: 60
     },
     content: {
-      flexDirection: "row"
+      flexDirection: "row",
     },
     row: {
         display: "flex",

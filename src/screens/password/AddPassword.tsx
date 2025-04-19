@@ -13,6 +13,7 @@ import { ThemeConstant } from "../../theme/themeConstant";
 import { SALT } from "../../utils/constant";
 import { DBContext } from "../../modals";
 import { randomStringGenerator } from "../../utils/randomStringGenerator";
+import EncryptedStorage from "react-native-encrypted-storage";
 
 export default function AddPassword(props: any) {
 
@@ -25,7 +26,7 @@ export default function AddPassword(props: any) {
     const navigation = props.navigation;
 
     // Handle submit
-    function handleFormSubmit(data: any) {
+    async function handleFormSubmit(data: any) {
 
         if (!data?.userName) {
             Toast.show({
@@ -54,7 +55,9 @@ export default function AddPassword(props: any) {
             return;
         }
 
-        const encryptedPassword = CryptoJS.AES.encrypt(data?.password, SALT).toString();
+        const saltKey = await EncryptedStorage.getItem("encryption_key") ?? SALT;
+
+        const encryptedPassword = CryptoJS.AES.encrypt(data?.password, saltKey).toString();
 
         try {
             realm.write(() => {

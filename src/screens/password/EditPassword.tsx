@@ -17,6 +17,7 @@ import DeleteModal from "../../components/DeleteModal";
 import { Realm } from '@realm/react'
 import { DBContext } from "../../modals";
 import Toast from "react-native-toast-message";
+import EncryptedStorage from "react-native-encrypted-storage";
 
 
 export default function EditPassword(props: any) {
@@ -35,11 +36,13 @@ export default function EditPassword(props: any) {
         updateFields()
     }, []);
 
-    function updateFields() {
+    async function updateFields() {
         try {
             if (credentialsData) {
-                let bytes = CryptoJS.AES.decrypt(credentialsData?.password, SALT);
+                const saltKey = await EncryptedStorage.getItem("encryption_key") ?? SALT;
+                let bytes = CryptoJS.AES.decrypt(credentialsData?.password, saltKey);
                 const decryptedValue = bytes.toString(CryptoJS.enc.Utf8);
+
                 setValue("userName", credentialsData?.user_name);
                 setValue("password", decryptedValue);
                 setValue("website", credentialsData?.website);
@@ -51,10 +54,13 @@ export default function EditPassword(props: any) {
         }
     }
 
-    function handleFormSubmit(data: any) {
+    async function handleFormSubmit(data: any) {
         try {
+            const saltKey = await EncryptedStorage.getItem("encryption_key") ?? SALT;
+            
             const id = new Realm.BSON.ObjectId(credentialsData?._id);
-            const encryptedPassword = CryptoJS.AES.encrypt(data?.password, SALT).toString();
+            const encryptedPassword = CryptoJS.AES.encrypt(data?.password, saltKey).toString();
+
             realm.write(() => {
                 const record = realm.objectForPrimaryKey("PasswordRecord", id)
                 if (record) {

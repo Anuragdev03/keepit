@@ -77,6 +77,10 @@ export default function Settings(props: any) {
         props.navigation.navigate("About");
     }
 
+    function gotoEncryptionScreen() {
+        props.navigation.navigate("EncryptionKey")
+    }
+
     const backupDesc = `Your data is being securely backed up to your device storage.You can restore it later if needed. The backup file will be saved in the Download/ folder as backup_<current_date>_<time>.realm. Make sure not to delete it from your storage.`;
     const restoreDesc = `Restore your previously backed-up data from storage. This will overwrite your current data with the selected backup file.`;
     return (
@@ -125,9 +129,20 @@ export default function Settings(props: any) {
                         </View> : null
                     }
                     {line}
+                    {/* Encryption */}
+                    <Pressable onPress={gotoEncryptionScreen} style={styles.row}>
+                        <Text style={styles.textStyle}>3. Encryption</Text>
+                        <MuiIcon
+                            name={"keyboard-arrow-right"}
+                            size={24}
+                            color={ThemeConstant.COLOR_BEIGE}
+                        />
+                    </Pressable>
+                    {line}
+
                     {/* About */}
                     <Pressable onPress={gotoAboutScreen} style={styles.row}>
-                        <Text style={styles.textStyle}>3. About</Text>
+                        <Text style={styles.textStyle}>4. About</Text>
                         <MuiIcon
                             name={"keyboard-arrow-right"}
                             size={24}
@@ -139,7 +154,7 @@ export default function Settings(props: any) {
                     {/* Privacy policy */}
 
                     <Pressable onPress={privacyPolicy} style={styles.row}>
-                        <Text style={styles.textStyle}>4. Privacy Policy</Text>
+                        <Text style={styles.textStyle}>5. Privacy Policy</Text>
                         <MuiIcon
                             name={"link"}
                             size={24}
