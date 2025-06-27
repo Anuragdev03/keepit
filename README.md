@@ -28,6 +28,7 @@ Whether it's website logins, credit card details, or two-factor authentication c
 
 ---
 
-## Playstore link - https://play.google.com/store/apps/details?id=com.anurag.keepit&hl=en_IN
+## App Links
 > Website -> https://keepit123.netlify.app/
+> Playstore - https://play.google.com/store/apps/details?id=com.anurag.keepit&hl=en_IN
 
